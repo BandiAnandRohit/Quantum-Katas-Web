@@ -1,0 +1,4 @@
+node_modules/
+tools/validate-results.json
+*.log
+.DS_Store

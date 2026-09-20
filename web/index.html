@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum Katas — learn quantum computing in your browser</title>
+<meta name="description" content="Interactive quantum computing tutorials and Q# programming exercises that run entirely in your browser. No login, no install.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
+<link rel="stylesheet" href="app.css">
+<script>
+  // apply the saved theme before first paint (avoids a flash)
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem("qk:v1:theme"); } catch (e) {}
+    if (t !== "light" && t !== "dark") t = window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", t);
+  })();
+</script>
+</head>
+<body>
+<header id="topbar">
+  <button id="menu-btn" class="icon-btn" aria-label="Menu" title="Menu">☰</button>
+  <a class="brand" href="#/"><span class="logo">⟩</span><span class="brand-text">Quantum Katas</span></a>
+  <div id="search-wrap">
+    <input id="search" type="search" placeholder="Search lessons  ( / )" autocomplete="off" spellcheck="false" aria-label="Search lessons">
+    <div id="search-results" class="hidden"></div>
+  </div>
+  <nav class="top-links">
+    <a href="#/playground">Playground</a>
+    <a href="https://github.com/microsoft/QuantumKatas" target="_blank" rel="noopener">Original katas</a>
+  </nav>
+  <button id="theme-btn" class="icon-btn" aria-label="Toggle theme">☾</button>
+</header>
+<div id="scrim"></div>
+<div id="layout">
+  <aside id="sidebar">
+    <div id="side-links">
+      <a href="#/">Home</a>
+      <a href="#/playground">Q# playground</a>
+    </div>
+    <nav id="tree" aria-label="Curriculum"></nav>
+  </aside>
+  <main id="main"><noscript>This site needs JavaScript.</noscript></main>
+  <aside id="toc"></aside>
+</div>
+<script src="app.js" defer></script>
+</body>
+</html>
