@@ -1,10 +1,9 @@
-# Publishes the ready-made site in dist/ to GitHub Pages on every push to main.
-# One-time setup: repository Settings -> Pages -> Build and deployment -> Source: "GitHub Actions".
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -19,14 +18,32 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify dist
+        run: |
+          echo "Contents of dist:"
+          find dist -maxdepth 2 -type f | head -100
+
+          echo ""
+          echo "First lines of dist/index.html:"
+          head -20 dist/index.html
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload dist
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
-      - id: deployment
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
